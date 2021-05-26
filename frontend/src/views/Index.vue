@@ -2,13 +2,16 @@
   <div class="index">
     <Nav></Nav>
     <div class="content">
-      <span class="words">
-        <h2>欢迎使用湛影系统</h2>
-      </span>
-      <br />
-      <span class="words">
-        <h2>点击按钮开始检测或者查看病历记录</h2>
-      </span>
+      <div class="indexTitle">
+        <span class="words">
+          <h2>欢迎使用湛影系统</h2>
+        </span>
+        <br />
+        <span class="words">
+          <h2>点击按钮开始检测或者查看病历记录</h2>
+        </span>
+      </div>
+
       <div class="buttons">
         <div class="ubutton">
           <el-button type="primary" @click="diagnose">检测</el-button>
@@ -44,6 +47,13 @@ export default {
 <style>
 .index {
   height: 100vh;
+}
+.indexTitle {
+  margin-top: 5vh;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  margin-left: 25vw;
+  margin-right: 25vw;
+  padding: 5px;
 }
 .content {
   height: 65vh;

@@ -128,6 +128,7 @@ export default {
     uploadID() {
       //提交文件ID+病人ID
       console.log(this.imageID,this.ruleForm.pid)
+      this.$router.push({ name: "result"});
     },
   },
 };

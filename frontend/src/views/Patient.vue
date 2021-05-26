@@ -19,7 +19,24 @@
         </div>
       </div>
       <div class="splitLine"></div>
-      <div class="result">---</div>
+      <div class="result">
+        <div class="resultBlock">
+          <div class="diagnoseTime">
+            <i class="el-icon-time" style="margin-right:5px"></i>
+            <span>检测时间： </span>
+            <span>{{}}</span>
+          </div>
+          <div class="patientImage">
+            <img class="patientOrigin" src="" />
+            <img class="patientPredict" src="" />
+          </div>
+          <div class="patientResult">
+            <i class="el-icon-warning-outline" style="margin-right:5px"></i>
+            <span>检测结果： </span>
+            <span>{{}}</span>
+          </div>
+        </div>
+      </div>
     </div>
     <Footer></Footer>
   </div>
@@ -78,7 +95,7 @@ export default {
   font-weight: bold;
 }
 .vueWord {
-  margin-right: 20px;
+  margin-right: 40px;
 }
 .generalWord {
   margin-top: 20px;
@@ -95,7 +112,34 @@ export default {
   color: rgba(101, 101, 101, 1);
 }
 .result {
-  margin-left: 10vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
   margin-top: 30px;
+}
+.resultBlock {
+  padding: 10px;
+  margin-bottom: 5vh;
+  border-radius: 2px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+.diagnoseTime {
+  text-align: center;
+  margin: 10px;
+  font-size: 20px;
+  font-weight: 500;
+  align-items: center;
+}
+.patientResult {
+  text-align: center;
+  margin: 10px;
+  font-size: 20px;
+  font-weight: 500;
+  align-items: center;
+}
+.patientImage {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 </style>
