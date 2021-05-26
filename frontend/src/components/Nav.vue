@@ -9,7 +9,7 @@
         <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" router>
           <el-menu-item index="/">首页</el-menu-item>
           <el-menu-item index="/diagnose">检测</el-menu-item>
-          <el-menu-item index="/history">历史记录</el-menu-item>
+          <el-menu-item index="/history">病历记录</el-menu-item>
         </el-menu>
       </div>
     </div>
@@ -48,7 +48,7 @@ export default {
   text-align: center;
 }
 .image {
-  height: 80px;
+  height: 77px;
   margin-left: 20px;
 }
 .rout {
@@ -60,5 +60,11 @@ export default {
   align-items: center;
   margin-left: 20px;
   margin-top: 25px;
+}
+.el-menu.el-menu--horizontal {
+  border-bottom: 0;
+}
+.el-menu-item {
+  border: 0;
 }
 </style>
