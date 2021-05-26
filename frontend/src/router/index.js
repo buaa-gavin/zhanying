@@ -16,6 +16,11 @@ const routes = [
     path: "/history",
     component: () => import("../views/History.vue"),
   },
+  {
+    path: "/history/:id",
+    name: "patient",
+    component: () => import("../views/Patient.vue"),
+  },
 ];
 
 const router = new VueRouter({
