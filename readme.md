@@ -9,6 +9,14 @@
 
 建议使用anaconda管理包和库，目前依赖在`zhanying/backend/requirements.txt`，python版本为3.8
 
+## 前端运行
+
+进入frontend
+
+首先`npm install`
+
+然后`npm run serve`
+
 ## 数据库配置
 
 mysql 8.0.25
