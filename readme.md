@@ -5,6 +5,10 @@
 
 后端端口 8090    启动:`python manage.py runserver 8090`
 
+## 后端配置
+
+建议使用anaconda管理包和库，目前依赖在`zhanying/backend/requirements.txt`，python版本为3.8
+
 ## 数据库配置
 
 mysql 8.0.25
