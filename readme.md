@@ -3,9 +3,10 @@
 
 前端端口 8080 启动:`npm run dev`
 
-
 后端端口 8090    启动:`python manage.py runserver 8090`
-##数据库配置
+
+## 数据库配置
+
 mysql 8.0.25
 
 本地mysql建立zhanying数据库，在django的settings文件中修改：
