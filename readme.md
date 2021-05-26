@@ -25,6 +25,15 @@ DATABASES = {
     }
 }
 ```
+之后迁移模型
+
+```python
+python manage.py makemigrations
+python manage.py migrate
+```
+
+
+
 ## 模型
 
 因为模型文件太大，暂不上传。使用时在：
