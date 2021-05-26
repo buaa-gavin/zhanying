@@ -25,7 +25,16 @@ DATABASES = {
     }
 }
 ```
+## 模型
+
+因为模型文件太大，暂不上传。使用时在：
+
+`zhanying/backend/algorithm/efficientnet/effb6.pth`和`zhanying/backend/algorithm/unet/MODEL.pth`
+
+注意，模型名称必须对应，名称不能修改
+
 ## 需求分析
+
 获取病人列表
 
 * 病人相关信息 -> `/api/InfoList`
