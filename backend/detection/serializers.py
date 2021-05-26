@@ -1,8 +1,24 @@
 from rest_framework import serializers
 
+from detection.models import Person
 
 
-class PersonListSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    name = serializers.CharField(allow_blank=True,max_length=255)
-    birth = serializers.DateField()
+class PersonListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Person
+        fields = [
+            'id',
+            'name',
+            'updated',
+        ]
+
+
+class PersonDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Person
+        fields = [
+            'id',
+            'name',
+            'birth',
+            'updated'
+        ]

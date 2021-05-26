@@ -17,31 +17,39 @@ class Person(models.Model):
         (FEMALE, "女")
     ]
     name = models.CharField(verbose_name="姓名", max_length=255, null=False, default="未知病人")
-    birth = models.DateField(verbose_name="出生日期",default=timezone.now())
-    sex = models.CharField(verbose_name= "性别",max_length=10, choices=GENDER_IN_CHOICES, default=UNKNOWN)
-    Image = models.ForeignKey('CancerImage',verbose_name="检测结果", on_delete=models.CASCADE, null = True)
+    birth = models.DateField(verbose_name="出生日期", default=timezone.now())
+    sex = models.CharField(verbose_name="性别", max_length=10, choices=GENDER_IN_CHOICES, default=UNKNOWN)
     updated = models.DateTimeField(verbose_name="最近检测时间", auto_now=True, null=True)
 
     class Meta:
         ordering = ('-updated',)
 
 
-class CancerImage(models.Model):
+class Diagnose(models.Model):
     content = models.ImageField(upload_to='images/%Y%m%d')
     created = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=255, blank=True)
     semantic = models.ImageField(max_length=255, blank=True)
+    # 多对一关系，多个诊断结果对应多个Person,反向查询时，是在p = Person.objects.get(id=1);p.diagnose_set 获取所有信息
+    person = models.ForeignKey(
+        Person,
+        verbose_name="病人信息",
+        related_name="diagnose_set",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
 
     class Meta:
         ordering = ('-created',)
 
     def save(self, *args, **kwargs):
-        super(CancerImage, self).save(*args, **kwargs)
+        super(Diagnose, self).save(*args, **kwargs)
         self.status = effb6_apply(os.path.abspath('.') + self.content.url)
         self.semantic.save = ((unet_semantic(os.path.abspath('.') + self.content.url)).split(os.path.abspath('.')))[1]
 
-        super(CancerImage, self).save(*args, **kwargs)
+        super(Diagnose, self).save(*args, **kwargs)
 
     def admin_image(self):
         return '<img src="%s"/>' % self.content
