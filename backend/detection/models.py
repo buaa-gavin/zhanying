@@ -46,10 +46,11 @@ class Diagnose(models.Model):
 
     def save(self, *args, **kwargs):
         super(Diagnose, self).save(*args, **kwargs)
-        self.status = effb6_apply(os.path.abspath('.') + self.content.url)
-        self.semantic.save = ((unet_semantic(os.path.abspath('.') + self.content.url)).split(os.path.abspath('.')))[1]
+        img_path = os.path.abspath('.') + self.content.url
+        self.status = effb6_apply(img_path)
+        self.semantic = (unet_semantic(img_path)).split(os.path.abspath('.')+'/media/')[1]
 
-        super(Diagnose, self).save(*args, **kwargs)
+        super(Diagnose,self).save(force_update=True)
 
     def admin_image(self):
         return '<img src="%s"/>' % self.content
