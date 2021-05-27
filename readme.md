@@ -82,3 +82,29 @@ python manage.py migrate
 - Person
 - Image
 - 一对多
+
+---
+
+接口示范
+
+* 路径：`/api/InfoList`
+
+* 实例:
+
+  ```json
+  [
+  	{
+  		id:'1',
+  		update:'2021-05-26',
+          name:'666'
+  	},
+      {
+          id:'2',
+  		update:'2021-05-20',
+          name:'---'
+      }
+  ]
+  ```
+
+  
+
