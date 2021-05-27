@@ -45,12 +45,12 @@ class Diagnose(models.Model):
         ordering = ('-created',)
 
     def save(self, *args, **kwargs):
-        super(Diagnose, self).save(*args, **kwargs)
-        img_path = os.path.abspath('.') + self.content.url
-        self.status = effb6_apply(img_path)
-        self.semantic = (unet_semantic(img_path)).split(os.path.abspath('.')+'/media/')[1]
-
-        super(Diagnose,self).save(force_update=True)
+        if self.status is None:
+            super(Diagnose, self).save(*args, **kwargs)
+            img_path = os.path.abspath('.') + self.content.url
+            self.status = effb6_apply(img_path)
+            self.semantic = (unet_semantic(img_path)).split(os.path.abspath('.')+'/media/')[1]
+        super(Diagnose, self).save(force_update=True)
 
     def admin_image(self):
         return '<img src="%s"/>' % self.content
