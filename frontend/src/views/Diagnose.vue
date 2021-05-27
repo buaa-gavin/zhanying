@@ -3,18 +3,25 @@
     <Nav></Nav>
     <div class="content">
       <div class="upimg">
-        <el-upload
-          action="' '"
-          :class="uploadDisabled"
-          list-type="picture-card"
-          :limit="1"
-          show-file-list
-          :auto-upload="true"
-          :on-change="change"
-          :on-remove="recover"
-          multiple
-          :http-request="uploadImage"
+        <input
+               v-on:change="uploadImage"
+               type="file"
+               id="file"
         >
+        <!--        <el-upload-->
+<!--            type="file"-->
+<!--            id="file"-->
+<!--            action="' '"-->
+<!--            :class="uploadDisabled"-->
+<!--            list-type="picture-card"-->
+<!--            :limit="1"-->
+<!--            show-file-list-->
+<!--            :auto-upload="true"-->
+<!--            :on-change="change"-->
+<!--            :on-remove="recover"-->
+<!--            multiple-->
+<!--            :http-request="uploadImage"-->
+<!--        >-->
           <i class="el-icon-plus" style="height:300px,width:300px"></i>
         </el-upload>
         <el-dialog :visible.sync="dialogVisible">
@@ -73,7 +80,7 @@ export default {
   },
   methods: {
     //单独发送图片
-    uploadImage() {
+    uploadImage(e) {
       //   console.log(this.ruleForm.pid);
       // 发送 POST 请求
       let config = {
@@ -81,16 +88,19 @@ export default {
           "Content-Type": "multipart/form-data", //设置headers
         },
       };
-      const formData = new FormData();
+      const file = e.target.files[0];
+      let formData = new FormData();
+      formData.append("content",file)
+
       var that = this;
       // 首先判断是否上传了图片，如果上传了图片，将图片存入到formData中
-      console.log(this.dataList);
-      if (this.dataList) {
-        that.dataList.forEach((item, index) => {
-          // console.log(item)
-          formData.append(index, item);
-        });
-      }
+      // console.log(this.dataList);
+      // if (this.dataList) {
+      //   that.dataList.forEach((item, index) => {
+      //     // console.log(item)
+      //     formData.append(index, item);
+      //   });
+      // }
       // console.log(formData.get(0));
       axios
         .post(
@@ -105,6 +115,7 @@ export default {
           this.$store.commit("editResult", res.data.status);
           this.$store.commit("editIsDone");
           this.imageID = res.data.id;
+          console.log(res.data);
         })
         .catch((error) => {
           console.log("请求失败");
@@ -143,7 +154,7 @@ export default {
 <style>
 .content {
   margin-top: 10vh;
-  height: 60vh;
+  /*height: 60vh;*/
 }
 
 .upimg {

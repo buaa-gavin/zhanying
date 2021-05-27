@@ -52,13 +52,21 @@ export default {
     Nav,
     Footer,
   },
-  data() {
+  data: function() {
     return {
       info: null,
     };
   },
+  // data() {
+  //   return {
+  //     info: null,
+  //   };
+  // },
   mounted() {
-    axios.get("/api/InfoList/").then((response) => (this.info = response.data));
+    //this.info = response.data
+    axios
+        .get("/api/InfoList/")
+        .then((response) => (this.info = response.data));
   },
   methods: {
     handleEdit(index, row) {

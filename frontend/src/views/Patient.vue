@@ -11,20 +11,22 @@
             <span>姓名： {{ patientInfo.name }}</span>
           </div>
           <div class="generalWord">
-            <span class="titleWord">ID： </span><span class="vueWord">{{ patientInfo.id }}</span> <span class="titleWord">初诊日期： </span><span class="vueWord">{{ patientInfo.date }}</span>
+            <span class="titleWord">ID： </span><span class="vueWord">{{ patientInfo.id }}</span> <span class="titleWord">初诊日期： </span><span class="vueWord">{{ patientInfo.updated }}</span>
           </div>
           <div class="generalWord">
-            <span class="titleWord">性别： </span><span class="vueWord">{{ patientInfo.sex }}</span> <span class="titleWord">出生日期： </span><span class="vueWord">{{ patientInfo.birthday }}</span>
+            <span class="titleWord">性别： </span><span class="vueWord">{{ patientInfo.sex }}</span> <span class="titleWord">出生日期： </span><span class="vueWord">{{ patientInfo.birth }}</span>
           </div>
         </div>
       </div>
       <div class="splitLine"></div>
+
+
       <div class="result">
-        <div class="resultBlock" :v-for="item in patientInfo.diagnose_set">
+        <div class="resultBlock" v-for="item in patientInfo.diagnose_set">
           <div class="diagnoseTime">
             <i class="el-icon-time" style="margin-right:5px"></i>
             <span>检测时间： </span>
-            <span>{{item.updated}}</span>
+            <span>{{ formatted_time(item.updated) }}</span>
           </div>
           <div class="patientImage">
             <img class="patientOrigin" :src="item.content" />
@@ -37,6 +39,9 @@
           </div>
         </div>
       </div>
+
+
+
     </div>
     <Footer></Footer>
   </div>
@@ -51,21 +56,38 @@ export default {
     Nav,
     Footer,
   },
-  mounted() {
-    axios.get("/api/InfoList/" + this.$route.params.id).then((response) => (this.patientInfo = response.data));
-  },
   data: function() {
     return {
       patientInfo: null,
-    };
+    }
   },
+  mounted() {
+    //this.patientInfo = response.data
+    axios
+        .get("/api/InfoList/" + this.$route.params.id + "/")
+        .then(response => {
+            console.log(response)
+            console.log(response.data)
+            this.patientInfo = response.data
+            console.log(this.patientInfo)
+          });
+
+  },
+  methods: {
+      formatted_time: function (iso_date_string) {
+          const date = new Date(iso_date_string);
+
+          return date.toLocaleDateString()
+      }
+  }
+
 };
 </script>
 
 <style>
-.content {
-  height: 70vh;
-}
+/*.content {*/
+/*  height: 70vh;*/
+/*}*/
 .infoPart {
   margin-left: 10vw;
   height: 20vh;
