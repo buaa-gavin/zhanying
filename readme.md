@@ -89,18 +89,22 @@ python manage.py migrate
 
 ### 病人信息管理
 
-* 路径：`/api/InfoList` 
+* 路径：`/api/InfoList` ，`/api/InfoList/id` 
 
 * 方法
 
-  * GET
-    * 获取病人列表信息
-  * POST
+  * GET `/api/InfoList` 
+    * 获取病人所有的信息，以列表所示
+  * POST `/api/InfoList` 
     * 增加新的病人信息
+  * GET `/api/InfoList/1`
+    * 获取1号病人的详细信息
+
+  
 
 * 实例:
 
-  * GET
+  * GET `/api/InfoList` 
 
     * 获取字段为
 
@@ -146,7 +150,7 @@ python manage.py migrate
     ]
     ```
 
-  - PUT
+  - POST `/api/InfoList` 
 
     - 上传必选字段为`name`，其余的`birth`默认为上传日期，`updated`可以为空，`id`自动分配
 
@@ -159,6 +163,55 @@ python manage.py migrate
     	}
     //POST http://127.0.0.1:8090/api/InfoList/
     ```
+
+  - GET `/api/InfoList/1`
+
+    示例：
+
+    ```python
+    {
+        "id": 1,
+        "name": "李田所",
+        "diagnose_set": [
+            {
+                "id": 3,
+                "url": "http://127.0.0.1:9000/api/diagnose/3/",
+                "content": "http://127.0.0.1:9000/media/images/20210526/Sea.jpg",
+                "created": "2021-05-26T14:54:05.272914Z",
+                "updated": "2021-05-27T00:45:24.627924Z",
+                "status": "良性肿瘤",
+                "semantic": "http://127.0.0.1:9000/media/images/20210526/Sea_out.jpg",
+                "person": 1
+            },
+            {
+                "id": 2,
+                "url": "http://127.0.0.1:9000/api/diagnose/2/",
+                "content": "http://127.0.0.1:9000/media/images/20210327/mmexport1540431896724.jpg",
+                "created": "2021-03-27T06:54:32.799049Z",
+                "updated": "2021-05-27T00:45:14.411135Z",
+                "status": "恶性肿瘤",
+                "semantic": "http://127.0.0.1:9000/media/images/20210327/mmexport1540431896724_out.jpg",
+                "person": 1
+            },
+            {
+                "id": 1,
+                "url": "http://127.0.0.1:9000/api/diagnose/1/",
+                "content": "http://127.0.0.1:9000/media/images/20210325/5.png",
+                "created": "2015-05-26T00:00:00Z",
+                "updated": "2021-05-27T02:44:35.266439Z",
+                "status": "良性",
+                "semantic": "http://127.0.0.1:9000/media/images/20210325/5_out.png",
+                "person": 1
+            }
+        ],
+        "birth": "2021-05-26",
+        "updated": "2021-05-27T02:44:35.266439Z"
+    }
+    ```
+
+    
+
+     
 
 ### 诊断信息管理
 
