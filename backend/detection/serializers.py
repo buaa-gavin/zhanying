@@ -13,6 +13,7 @@ class DiagnoseSerializer(serializers.ModelSerializer):
 
 class PersonListSerializer(serializers.ModelSerializer):
     updated = serializers.SerializerMethodField('get_updated')
+    # url = serializers.HyperlinkedIdentityField(view_name='detail')
 
     def get_updated(self, person):
         try:
@@ -27,8 +28,9 @@ class PersonListSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'name',
+            'sex',
             'birth',
-            'updated'
+            'updated',
         ]
 
 
@@ -49,6 +51,7 @@ class PersonDetailSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'name',
+            'sex',
             'diagnose_set',
             'birth',
             'updated'

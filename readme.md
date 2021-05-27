@@ -113,16 +113,40 @@ python manage.py migrate
         {
             "id": int,
             "name": char,
-            "birth": date
+            "birth": date,
+            "sex": char, # sex类型为： f,m,unknown
             "updated":datetime
         }
     ]
     ```
-
-    ​	示例：
-
+    
+    **注意，sex的类型有区别。**	
+    
+    示例：
+    
     ```json
-    [
+    [    
+        {
+            "id": 17,
+            "name": "testSS",
+            "sex": "m",
+            "birth": "2021-05-27",
+            "updated": null
+        },
+        {
+            "id": 16,
+            "name": "testSS",
+            "sex": "f",
+            "birth": "2021-05-27",
+            "updated": null
+        },
+        {
+            "id": 15,
+            "name": "testSS",
+            "sex": "unknown",
+            "birth": "2021-05-27",
+            "updated": null
+        },
         {
             "id": 4,
             "name": "李田所2",
@@ -172,6 +196,7 @@ python manage.py migrate
     {
         "id": 1,
         "name": "李田所",
+        "sex": "unknown",
         "diagnose_set": [
             {
                 "id": 3,
