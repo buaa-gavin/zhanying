@@ -85,26 +85,134 @@ python manage.py migrate
 
 ---
 
-接口示范
+## 接口
 
-* 路径：`/api/InfoList`
+### 病人信息管理
+
+* 路径：`/api/InfoList` 
+
+* 方法
+
+  * GET
+    * 获取病人列表信息
+  * POST
+    * 增加新的病人信息
 
 * 实例:
 
-  ```json
-  [
-  	{
-  		id:'1',
-  		update:'2021-05-26',
-          name:'666'
-  	},
-      {
-          id:'2',
-  		update:'2021-05-20',
-          name:'---'
-      }
-  ]
-  ```
+  * GET
 
-  
+    * 获取字段为
+
+    ```python
+    [
+        {
+            "id": int,
+            "name": char,
+            "birth": date
+            "updated":datetime
+        }
+    ]
+    ```
+
+    ​	示例：
+
+    ```json
+    [
+        {
+            "id": 4,
+            "name": "李田所2",
+            "birth": "2021-05-26",
+            "updated": null
+        },
+        {
+            "id": 3,
+            "name": "A",
+            "birth": "2021-05-26",
+            "updated": null
+        },
+        {
+            "id": 2,
+            "name": "野兽先辈",
+            "birth": "2021-05-26",
+            "updated": null
+        },
+        {
+            "id": 1,
+            "name": "李田所",
+            "birth": "2021-05-26",
+            "updated": "2021-05-27T00:45:24.627924Z"
+        }
+    ]
+    ```
+
+  - PUT
+
+    - 上传必选字段为`name`，其余的`birth`默认为上传日期，`updated`可以为空，`id`自动分配
+
+    示例：
+
+    ```python
+    data = {
+        "name": "Test上传",
+        "birth": "2000-03-21"
+    	}
+    //POST http://127.0.0.1:8090/api/InfoList/
+    ```
+
+### 诊断信息管理
+
+- 路径：`api/diagnose/` , 详细信息为`api/diagnose/1/`
+
+- 方法：
+
+  - POST 上传图片，POST `api/diagnose`，返回信息为：
+
+    ```python
+    {
+      "id":8,
+      "url":"http://127.0.0.1:9000/api/diagnose/8/",
+       "content":"http://127.0.0.1:9000/media/images/20210527/Sea1919810114514.jpg",
+       "created":"2021-05-27T00:08:19.735430Z",
+        "updated":"2021-05-27T02:49:12.830829Z",
+       "status":"良性肿瘤",
+       "semantic":"http://127.0.0.1:9000/media/images/20210527/Sea1919810114514_out.jpg",
+       "person":null
+    }
+    ```
+
+    有用的是`id`和`url`，`url`
+
+    `content`为可访问的，保存在服务端的图片的地址，可以直接引用
+
+    `smantic`是语义分割的结果
+
+    `status`是分类结果
+
+    `updated`是最好更新时间，datetime
+
+  - PATCH  更新病人信息，当上传图片返回图片相应信息后，直接获取url，然后PATCH url，data数据段为`person`的主键，data格式的示例：
+
+    ```json
+    {
+        "person":2
+    }
+    ```
+
+    成功时候返回信息为
+
+    ```python
+    {
+      "id":8,
+      "url":"http://127.0.0.1:9000/api/diagnose/8/",
+       "content":"http://127.0.0.1:9000/media/images/20210527/Sea1919810114514.jpg",
+       "created":"2021-05-27T00:08:19.735430Z",
+        "updated":"2021-05-27T02:49:12.830829Z",
+       "status":"良性肿瘤",
+       "semantic":"http://127.0.0.1:9000/media/images/20210527/Sea1919810114514_out.jpg",
+       "person":2
+    }
+    ```
+
+    唯一的区别是`person`有了主键的信息。
 
