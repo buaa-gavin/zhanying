@@ -10,7 +10,7 @@
           <el-table-column label="检测时间" width="300">
             <template slot-scope="scope">
               <i class="el-icon-time"></i>
-              <span style="margin-left: 10px">{{ scope.row.date }}</span>
+              <span style="margin-left: 10px">{{ scope.row.updated }}</span>
             </template>
           </el-table-column>
 

@@ -47,6 +47,9 @@ export default {
     Nav,
     Footer,
   },
+  mounted() {
+    this.$store.commit("editIsDone");
+  },
   data() {
     var validateID = (rule, value, callback) => {
       if (value === "") {
@@ -91,20 +94,17 @@ export default {
       // console.log(formData.get(0));
       axios
         .post(
-          "/api/upload/", //请求后端的url
+          "/api/diagnose/", //请求后端的url
           formData,
           config
         )
         .then((res) => {
-          console.log(res);
-          if (res.data.status == "ok") {
-            //上传成功
-            console.log("上传成功");
-            //获取文件id
-            axios.get("/api/article/").then((response) => (this.imageID = response.data));
-          } else {
-            alert("上传失败");
-          }
+          console.log(res.data);
+          this.$store.commit("editOrigin", res.data.content);
+          this.$store.commit("editImage", res.data.semantic);
+          this.$store.commit("editResult", res.data.status);
+          this.$store.commit("editIsDone");
+          this.imageID = res.data.id;
         })
         .catch((error) => {
           console.log("请求失败");
@@ -127,8 +127,14 @@ export default {
     },
     uploadID() {
       //提交文件ID+病人ID
-      console.log(this.imageID,this.ruleForm.pid)
-      this.$router.push({ name: "result"});
+      console.log(this.imageID, this.ruleForm.pid);
+      axios({
+        method: "patch", //请求方法
+        data: { person: this.ruleForm.pid },
+        url: "/api/diagnose/" + this.imageID + "/",
+      }).then((res) => {
+        this.$router.push({ name: "result" });
+      });
     },
   },
 };

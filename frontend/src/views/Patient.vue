@@ -20,20 +20,20 @@
       </div>
       <div class="splitLine"></div>
       <div class="result">
-        <div class="resultBlock">
+        <div class="resultBlock" :v-for="item in patientInfo.diagnose_set">
           <div class="diagnoseTime">
             <i class="el-icon-time" style="margin-right:5px"></i>
             <span>检测时间： </span>
-            <span>{{}}</span>
+            <span>{{item.updated}}</span>
           </div>
           <div class="patientImage">
-            <img class="patientOrigin" src="" />
-            <img class="patientPredict" src="" />
+            <img class="patientOrigin" :src="item.content" />
+            <img class="patientPredict" :src="item.semantic" />
           </div>
           <div class="patientResult">
             <i class="el-icon-warning-outline" style="margin-right:5px"></i>
             <span>检测结果： </span>
-            <span>{{}}</span>
+            <span>{{item.status}}</span>
           </div>
         </div>
       </div>
@@ -45,23 +45,18 @@
 <script>
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
+import axios from "axios";
 export default {
   components: {
     Nav,
     Footer,
   },
-  //   mounted() {
-  //     axios.get("/api/InfoList/" + this.$route.params.id).then((response) => (this.info = response.data));
-  //   },
+  mounted() {
+    axios.get("/api/InfoList/" + this.$route.params.id).then((response) => (this.patientInfo = response.data));
+  },
   data: function() {
     return {
-      patientInfo: {
-        id: "1",
-        name: "a",
-        sex: "男",
-        birthday: "2000-05-26",
-        date: "2021-05-26",
-      },
+      patientInfo: null,
     };
   },
 };

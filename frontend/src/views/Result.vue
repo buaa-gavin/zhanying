@@ -1,28 +1,31 @@
 <template>
   <div>
     <Nav></Nav>
-    <div class="result">
+    <div class="result" v-if="$store.state.isDone" v-loading="loading">
+      <h1 class="loadingWord">检测中</h1>
+    </div>
+    <div class="result" v-else>
       <div class="resultTitle">
         <span>检测结果</span>
       </div>
       <div class="resultImage">
         <div class="originImage">
-          <img :src="originImage" />
+          <img :src="$store.state.originImage" />
         </div>
         <div class="predictImage">
-          <img :src="predictImage" />
+          <img :src="$store.state.segImage" />
         </div>
       </div>
       <div class="predictClass">
         <span> 诊断结果： </span>
-        <span>{{ classResult }}</span>
+        <span>{{ $store.state.classResult }}</span>
       </div>
       <div class="resultButton">
         <div class="leftButton">
-          <el-button type="primary" @click="diagnose">继续检测</el-button>
+          <el-button type="primary" @click="backDiagnose">继续检测</el-button>
         </div>
         <div class="rightButton">
-          <el-button type="success" @click="history">查看病历记录</el-button>
+          <el-button type="success" @click="backHistory">查看病历记录</el-button>
         </div>
       </div>
     </div>
@@ -35,17 +38,23 @@ import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import axios from "axios";
 export default {
-  mounted() {},
   components: {
     Nav,
     Footer,
   },
   data() {
     return {
-      originImage: "../assets/logo.png",
-      predictImage: "../assets/logo.png",
-      classResult: "正常",
+      loading: false,
     };
+  },
+  methods: {
+    backDiagnose() {
+      this.$router.push("/diagnose");
+      this.$store.commit("editIsDone");
+    },
+    backHistory() {
+      this.$router.push("/history");
+    },
   },
 };
 </script>
@@ -93,5 +102,12 @@ export default {
   text-align: center;
   align-items: center;
   margin-right: 30vw;
+}
+.loadingWord {
+  padding-top: 20vh;
+  text-align: center;
+  font-size: 40px;
+  font-weight: bold;
+  align-items: center;
 }
 </style>
