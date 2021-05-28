@@ -64,7 +64,7 @@ export default {
   mounted() {
     //this.patientInfo = response.data
     axios
-        .get("/api/InfoList/" + this.$route.params.id + "/")
+        .get("/api/InfoList/" + this.$route.params.id)
         .then(response => {
             console.log(response)
             console.log(response.data)

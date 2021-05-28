@@ -12,7 +12,7 @@ Vue.use(ElementUI);
 
 Vue.config.productionTip = false
 
-Axios.defaults.baseURL = 'http://localhost:8090/'
+// Axios.defaults.baseURL = 'http://localhost:8090/'
 Axios.defaults.withCredentials = true
 Vue.prototype.$axios = Axios
 
