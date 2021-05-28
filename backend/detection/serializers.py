@@ -13,7 +13,7 @@ class DiagnoseSerializer(serializers.ModelSerializer):
 
 class PersonListSerializer(serializers.ModelSerializer):
     updated = serializers.SerializerMethodField('get_updated')
-    # url = serializers.HyperlinkedIdentityField(view_name='detail')
+    url = serializers.HyperlinkedIdentityField(view_name='detection:detail')
 
     def get_updated(self, person):
         try:
@@ -31,6 +31,7 @@ class PersonListSerializer(serializers.ModelSerializer):
             'sex',
             'birth',
             'updated',
+            'url'
         ]
 
 

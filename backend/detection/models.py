@@ -45,7 +45,7 @@ class Diagnose(models.Model):
         ordering = ('-created',)
 
     def save(self, *args, **kwargs):
-        if self.status is None:
+        if self.pk is None:
             super(Diagnose, self).save(*args, **kwargs)
             img_path = os.path.abspath('.') + self.content.url
             self.status = effb6_apply(img_path)
