@@ -119,7 +119,7 @@ DATABASES = {
         'NAME': 'zhanying',
         'USER': 'root',
         'PASSWORD': '123456',
-        'HOST': '127.0.0.1',
+        'HOST': 'db',
         'PORT': '3306',
         'OPTIONS': {
             'autocommit': True,
