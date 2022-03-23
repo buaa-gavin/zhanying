@@ -1,7 +1,7 @@
 <template>
   <div>
     <Nav></Nav>
-    <div class="content">
+    <div class="patientContent">
       <div class="infoPart">
         <div class="iconHead">
           <i class="el-icon-user-solid"></i>
@@ -11,7 +11,7 @@
             <span>姓名： {{ patientInfo.name }}</span>
           </div>
           <div class="generalWord">
-            <span class="titleWord">ID： </span><span class="vueWord">{{ patientInfo.id }}</span> <span class="titleWord">初诊日期： </span><span class="vueWord">{{ patientInfo.updated }}</span>
+            <span class="titleWord">ID： </span><span class="vueWord">{{ patientInfo.id }}</span> <span class="titleWord">上次就诊日期： </span><span class="vueWord">{{ patientInfo.updated }}</span>
           </div>
           <div class="generalWord">
             <span class="titleWord">性别： </span><span class="vueWord">{{ patientInfo.sex }}</span> <span class="titleWord">出生日期： </span><span class="vueWord">{{ patientInfo.birth }}</span>
@@ -20,9 +20,8 @@
       </div>
       <div class="splitLine"></div>
 
-
       <div class="result">
-        <div class="resultBlock" v-for="item in patientInfo.diagnose_set">
+        <div class="resultBlock" v-for="item in patientInfo.diagnose_set" :key="item">
           <div class="diagnoseTime">
             <i class="el-icon-time" style="margin-right:5px"></i>
             <span>检测时间： </span>
@@ -35,13 +34,10 @@
           <div class="patientResult">
             <i class="el-icon-warning-outline" style="margin-right:5px"></i>
             <span>检测结果： </span>
-            <span>{{item.status}}</span>
+            <span>{{ item.status }}</span>
           </div>
         </div>
       </div>
-
-
-
     </div>
     <Footer></Footer>
   </div>
@@ -59,35 +55,39 @@ export default {
   data: function() {
     return {
       patientInfo: null,
-    }
+    };
   },
   mounted() {
     //this.patientInfo = response.data
-    axios
-        .get("/api/InfoList/" + this.$route.params.id)
-        .then(response => {
-            console.log(response)
-            console.log(response.data)
-            this.patientInfo = response.data
-            console.log(this.patientInfo)
-          });
-
+    axios.get("/api/InfoList/" + this.$route.params.id).then((response) => {
+      console.log(response);
+      console.log(response.data);
+      this.patientInfo = response.data;
+      console.log(this.patientInfo.updated.substring(0, 10));
+      this.patientInfo.updated = this.patientInfo.updated.substring(0, 10);
+      if (this.patientInfo.sex === "f") {
+        this.patientInfo.sex = "女";
+      } else if (this.patientInfo.sex === "m") {
+        this.patientInfo.sex = "男";
+      } else {
+        this.patientInfo.sex = "未知";
+      }
+    });
   },
   methods: {
-      formatted_time: function (iso_date_string) {
-          const date = new Date(iso_date_string);
+    formatted_time: function(iso_date_string) {
+      const date = new Date(iso_date_string);
 
-          return date.toLocaleDateString()
-      }
-  }
-
+      return date.toLocaleDateString();
+    },
+  },
 };
 </script>
 
 <style>
-/*.content {*/
-/*  height: 70vh;*/
-/*}*/
+.patientContent {
+  margin-bottom: 5px;
+}
 .infoPart {
   margin-left: 10vw;
   height: 20vh;
@@ -129,13 +129,13 @@ export default {
   color: rgba(101, 101, 101, 1);
 }
 .result {
-  margin-left: 5vw;
-  margin-right: 5vw;
-  margin-top: 30px;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  margin-top: 10vh;
 }
 .resultBlock {
   padding: 10px;
-  margin-bottom: 5vh;
+  margin-bottom: 10vh;
   border-radius: 2px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
@@ -158,5 +158,15 @@ export default {
   margin-bottom: 10px;
   margin-left: 20px;
   margin-right: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.patientOrigin {
+  width: 32vw;
+  margin-left: 4vw;
+}
+.patientPredict {
+  width: 32vw;
+  margin-right: 4vw;
 }
 </style>

@@ -3,25 +3,24 @@
     <Nav></Nav>
     <div class="content">
       <div class="upimg">
-        <input
+        <!-- <input
                v-on:change="uploadImage"
                type="file"
                id="file"
+        > -->
+        <el-upload
+          type="file"
+          id="file"
+          action="' '"
+          :class="uploadDisabled"
+          list-type="picture-card"
+          :limit="imageLimit"
+          :auto-upload="true"
+          :on-change="change"
+          :on-remove="recover"
+          multiple
+          :http-request="uploadImage"
         >
-        <!--        <el-upload-->
-<!--            type="file"-->
-<!--            id="file"-->
-<!--            action="' '"-->
-<!--            :class="uploadDisabled"-->
-<!--            list-type="picture-card"-->
-<!--            :limit="1"-->
-<!--            show-file-list-->
-<!--            :auto-upload="true"-->
-<!--            :on-change="change"-->
-<!--            :on-remove="recover"-->
-<!--            multiple-->
-<!--            :http-request="uploadImage"-->
-<!--        >-->
           <i class="el-icon-plus" style="height:300px,width:300px"></i>
         </el-upload>
         <el-dialog :visible.sync="dialogVisible">
@@ -38,7 +37,11 @@
         <span class="spanright"></span>
       </div>
       <div class="upbutton">
-        <el-button type="primary" @click="uploadID">检测</el-button>
+        <el-button type="primary" @click="uploadID">查看结果</el-button>
+      </div>
+      <div class="loadingIcon">
+        <i class="el-icon-loading" v-if="isLoading"></i>
+        <i class="el-icon-circle-check" v-if="isPredicted"></i>
       </div>
     </div>
     <Footer></Footer>
@@ -67,9 +70,12 @@ export default {
     };
     return {
       dataList: "",
+      imageLimit: 1,
       dialogImageUrl: "",
       uploadDisabled: "", //是否隐藏
       imageID: "",
+      isLoading: false,
+      isPredicted: false,
       ruleForm: {
         pid: "",
       },
@@ -80,7 +86,7 @@ export default {
   },
   methods: {
     //单独发送图片
-    uploadImage(e) {
+    uploadImage(params) {
       //   console.log(this.ruleForm.pid);
       // 发送 POST 请求
       let config = {
@@ -88,9 +94,10 @@ export default {
           "Content-Type": "multipart/form-data", //设置headers
         },
       };
-      const file = e.target.files[0];
+      const file = params.file;
       let formData = new FormData();
-      formData.append("content",file)
+      formData.append("content", file);
+      this.isLoading = true;
 
       var that = this;
       // 首先判断是否上传了图片，如果上传了图片，将图片存入到formData中
@@ -109,11 +116,12 @@ export default {
           config
         )
         .then((res) => {
+          this.isLoading = false;
+          this.isPredicted = true;
           console.log(res.data);
           this.$store.commit("editOrigin", res.data.content);
           this.$store.commit("editImage", res.data.semantic);
           this.$store.commit("editResult", res.data.status);
-          this.$store.commit("editIsDone");
           this.imageID = res.data.id;
           console.log(res.data);
         })
@@ -134,6 +142,8 @@ export default {
       this.uploadDisabled = "disabled";
     },
     recover() {
+      this.isLoading = false;
+      this.isPredicted = false;
       this.uploadDisabled = "";
     },
     uploadID() {
@@ -183,5 +193,13 @@ export default {
 }
 .disabled .el-upload--picture-card {
   display: none;
+}
+.loadingIcon {
+  align-items: center;
+  width: 100vw;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  text-align: center;
+  font-size: 35px;
 }
 </style>

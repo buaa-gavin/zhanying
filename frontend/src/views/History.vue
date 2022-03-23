@@ -64,9 +64,9 @@ export default {
   // },
   mounted() {
     //this.info = response.data
-    axios
-        .get("/api/InfoList/")
-        .then((response) => (this.info = response.data));
+    axios.get("/api/InfoList/").then((response) => (this.info = response.data));
+    console.log(this.info.updated.substring(0, 10));
+    this.info.updated = this.info.updated.substring(0, 10);
   },
   methods: {
     handleEdit(index, row) {

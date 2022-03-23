@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <h3 class="word">
-      湛影团队  2021
+      湛影团队 2021
     </h3>
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
   margin: auto;
 }
 .word {
-    width: 100vw;
+  width: 100vw;
   font-size: 20px;
   color: white;
   height: 30px;

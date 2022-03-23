@@ -1,20 +1,13 @@
 <template>
   <div>
     <Nav></Nav>
-    <div class="result" v-if="$store.state.isDone" v-loading="loading">
-      <h1 class="loadingWord">检测中</h1>
-    </div>
-    <div class="result" v-else>
+    <div class="result">
       <div class="resultTitle">
         <span>检测结果</span>
       </div>
       <div class="resultImage">
-        <div class="originImage">
-          <img :src="$store.state.originImage" />
-        </div>
-        <div class="predictImage">
-          <img :src="$store.state.segImage" />
-        </div>
+        <img class="originImage" :src="$store.state.originImage" />
+        <img class="predictImage" :src="$store.state.segImage" />
       </div>
       <div class="predictClass">
         <span> 诊断结果： </span>
@@ -44,13 +37,12 @@ export default {
   },
   data() {
     return {
-      loading: false,
+      loading: true,
     };
   },
   methods: {
     backDiagnose() {
       this.$router.push("/diagnose");
-      this.$store.commit("editIsDone");
     },
     backHistory() {
       this.$router.push("/history");
@@ -61,7 +53,7 @@ export default {
 
 <style>
 .result {
-  height: 75vh;
+  margin-top: 5px;
 }
 .resultTitle {
   margin-top: 5vh;
@@ -72,14 +64,18 @@ export default {
 }
 .resultImage {
   margin-top: 5vh;
+  margin-left: 20px;
+  margin-right: 20px;
   display: flex;
   justify-content: space-between;
 }
 .originImage {
-  margin-left: 10vw;
+  width: 32vw;
+  margin-left: 4vw;
 }
 .predictImage {
-  margin-right: 10vw;
+  width: 32vw;
+  margin-right: 4vw;
 }
 .predictClass {
   margin-top: 5vh;
@@ -89,19 +85,19 @@ export default {
 }
 .resultButton {
   margin-top: 20px;
-  width: 100vw;
   display: flex;
   justify-content: space-between;
 }
 .leftButton {
   text-align: center;
   align-items: center;
-  margin-left: 30vw;
+  margin-left: 25vw;
 }
 .rightButton {
   text-align: center;
   align-items: center;
-  margin-right: 30vw;
+  margin-right: 25vw;
+  margin-bottom: 5vh;
 }
 .loadingWord {
   padding-top: 20vh;
